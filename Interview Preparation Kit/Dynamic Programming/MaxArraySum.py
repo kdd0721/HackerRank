@@ -2,13 +2,12 @@
 import unittest
 
 def maxSubsetSum(arr):
-    for i in range(2,len(arr)):
-        temp_num = arr[i]
-        arr[i]=max(arr[i]+arr[temp] for temp in range(i-1))
-        if arr[i]<temp_num:
-            arr[i]=temp_num
-    print(arr)
-    return max(arr)
+    if len(arr) == 1:
+        return arr[0]
+    dp = [arr[0],max(arr[:2])]+[0]*(len(arr)-2)
+    for i in range(2, len(arr)):
+        dp[i] = max(arr[i], dp[i-1], dp[i-2]+arr[i])
+    return dp[-1]
 
 class TestMethods(unittest.TestCase):
     def test_maxSubsetSum(self):
